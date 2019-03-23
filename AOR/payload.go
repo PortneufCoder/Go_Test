@@ -36,7 +36,7 @@ func handleRequests() {
 
 	myRouter.HandleFunc("/sipRegistrations/{SipDumps}", returnOneSip).Methods("GET")
 
-	myRouter.HandleFunc("/sipRegistrations", returnAll).Methods("GET")
+	myRouter.HandleFunc("/sipRegistrations", returnSome).Methods("GET")
 
 	fmt.Println("Server Running!")
 	log.Fatal(http.ListenAndServe(":3500", myRouter))
@@ -47,11 +47,12 @@ func returnOneSip(w http.ResponseWriter, r *http.Request) {
 	variables := mux.Vars(r)
 	value := variables["AddressOfRecord"]
 
-	fmt.Fprintf(w, "Value: "+value)
+	// trying to extract one sip from a parameter
+	fmt.Fprintf(w, "Value: " + value)
 
 }
 
-func returnAll(w http.ResponseWriter, r *http.Request) {
+func returnSome(w http.ResponseWriter, r *http.Request) {
 	sips := SipDumps{
 		Sip{AddressOfRecord: "0142e2fa3543cb32bf000100620002", TenantID: "0127d974-f9f3-0704-2dee-000100420001", URI: "sip:0142e2fa3543cb32bf000100620002@109.149.135.172;jbcuser=cpe70",
 			Source: "29.211.204.173:19622", Target: "60.124.57.147:5061", UserAgent: "polycom.vvx.600", RawUserAgent: "PolycomVVX-VVX_600-UA/132.244.41.145", Created: "2016-12-12T22:40:40.764Z", LineID: "013db2ba-2175-6d29-6157-000100620002"},
